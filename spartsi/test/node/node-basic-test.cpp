@@ -2,6 +2,7 @@
 #include "node/node.hpp"
 
 #include <string>
+
 using std::string;
 
 TEST_CASE("Creation of simple nodes", "[spartsi::node]") {
@@ -25,7 +26,7 @@ TEST_CASE("Creation of simple nodes", "[spartsi::node]") {
         }
     }
 
-    SECTION("node with attributes (lets invoke the second constructor)"){
+    SECTION("node with attributes (lets invoke the second constructor)") {
         auto name = "Some name";
         auto version = "2.0";
         auto comment = "<insert hate here>";
