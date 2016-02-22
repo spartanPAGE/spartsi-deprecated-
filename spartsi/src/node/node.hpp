@@ -12,7 +12,8 @@ namespace spartsi {
     public:
         using shared = std::shared_ptr<node<Str>>;
         using str_t = Str;
-        using attributes_t = std::unordered_map<str_t, str_t>;
+        using attribute_t = std::pair<str_t, str_t>;
+        using attributes_t = std::unordered_map<str_t, attribute_t>;
         using children_t = std::unordered_map<str_t, node::shared>;
     private:
         node(
