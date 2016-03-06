@@ -97,6 +97,11 @@ namespace spartsi {
             return end_node();
         }
 
+        tree_builder &tree_builder::tree(view_of<str_t> name, node_t::shared instance) {
+            nodes.top()->children[name] = instance;
+            return *this;
+        }
+
 
         tree_builder build() {
             return tree_builder{};
