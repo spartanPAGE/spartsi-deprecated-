@@ -33,7 +33,14 @@ namespace spartsi {
             return *this;
         }
 
-        tree_builder::node_t::shared tree_builder::end_tree() { return root; }
+        tree_builder &tree_builder::end_tree() {
+            nodes.pop();
+            return *this;
+        }
+
+        tree_builder::node_t::shared tree_builder::get() {
+            return root;
+        }
 
         tree_builder &tree_builder::node(view_of<str_t> name) {
             nodes.push(nodes.top()->spawn_child(name, comment.pull()));
@@ -47,6 +54,23 @@ namespace spartsi {
 
         tree_builder &tree_builder::attr(view_of<str_t> name, view_of<str_t> value) {
             nodes.top()->attributes[name] = std::make_pair(value, comment.pull());
+            return *this;
+        }
+
+        tree_builder &tree_builder::ref_attr(view_of<str_t> name) {
+            auto &attrib = nodes.top()->attributes[name];
+            attrib = std::make_pair("", comment.pull());
+
+            ref_attrs.push_front(ref(attrib));
+            return *this;
+        }
+
+        tree_builder &tree_builder::ref_attr(view_of<str_t> name, view_of<str_t> value) {
+            auto &attr = ref_attrs.back().get();
+            attr.first = value;
+            if(attr.second.back() != '\n') attr.second += '\n';
+            attr.second += comment.pull();
+            ref_attrs.pop_back();
             return *this;
         }
 

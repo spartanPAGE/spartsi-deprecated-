@@ -1,8 +1,12 @@
 #include "catch/catch.hpp"
 #include "builder/tree-builder.hpp"
 
+#include <string>
+
 TEST_CASE("Sample builded tree", "[spartsi::builder]") {
-    using namespace spartsi::builder;
+    using namespace spartsi;
+    using namespace builder;
+    using namespace std;
 
     auto tree = build()
 
@@ -23,7 +27,7 @@ TEST_CASE("Sample builded tree", "[spartsi::builder]") {
             .node("bar")
                 .attr("name", "Walter")
             .end_node()
-        .end_tree();
+        .end_tree().get();
 
 
     SECTION("asserts") {
