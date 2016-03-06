@@ -28,7 +28,9 @@ namespace spartsi {
             comment_buffer comment;
             node_t::shared root = node_t::spawn_root("", "", "");
             std::stack<node_t::shared> nodes;
+
             std::deque<std::reference_wrapper<node_t::attribute_t>> ref_attrs;
+            std::deque<node_t::shared> ref_nodes;
 
             tree_builder &operator()(view_of<str_t> str);
 
@@ -46,10 +48,15 @@ namespace spartsi {
 
             tree_builder &attr(view_of<str_t> name, view_of<str_t> value);
 
-            tree_builder &ref_attr(view_of<str_t> name);
+            tree_builder &req_attr(view_of<str_t> name);
 
             tree_builder &ref_attr(view_of<str_t> name, view_of<str_t> value);
 
+            tree_builder &req_node(view_of<str_t> name);
+
+            tree_builder &ref_node(view_of<str_t> name);
+
+            tree_builder &end_ref_node();
         };
 
         tree_builder build();

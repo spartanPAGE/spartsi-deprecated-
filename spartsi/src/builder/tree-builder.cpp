@@ -57,7 +57,7 @@ namespace spartsi {
             return *this;
         }
 
-        tree_builder &tree_builder::ref_attr(view_of<str_t> name) {
+        tree_builder &tree_builder::req_attr(view_of<str_t> name) {
             auto &attrib = nodes.top()->attributes[name];
             attrib = std::make_pair("", comment.pull());
 
@@ -72,6 +72,29 @@ namespace spartsi {
             attr.second += comment.pull();
             ref_attrs.pop_back();
             return *this;
+        }
+
+        tree_builder &tree_builder::req_node(view_of<str_t> name) {
+            ref_nodes.push_front(nodes.top()->spawn_child(name, comment.pull()));
+            return *this;
+        }
+
+        tree_builder &tree_builder::ref_node(view_of<str_t> name) {
+            auto &ref_node = ref_nodes.back();
+            if(ref_node->name != name){ /*todo: use proper exception type*/
+                throw str_t("name doesnt match;").append(ref_node->name).append(" != ").append(name);
+            }
+
+            if(ref_node->comment.back() != '\n') ref_node->comment += '\n';
+            ref_node->comment += comment.pull();
+
+            nodes.push(ref_node);
+            ref_nodes.pop_back();
+            return *this;
+        }
+
+        tree_builder &tree_builder::end_ref_node() {
+            return end_node();
         }
 
 
