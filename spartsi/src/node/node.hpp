@@ -15,6 +15,7 @@ namespace spartsi {
         using attribute_t = std::pair<str_t, str_t>;
         using attributes_t = std::unordered_map<str_t, attribute_t>;
         using children_t = std::unordered_map<str_t, node::shared>;
+        using children_alternative_comment_t = std::unordered_map<str_t, str_t>;
     private:
         node(
             view_of<str_t> name,
@@ -61,6 +62,7 @@ namespace spartsi {
         str_t name, version, comment;
         attributes_t attributes;
         children_t children;
+        children_alternative_comment_t alternative_comments;
 
         node::shared spawn_child(
             view_of<str_t> name,

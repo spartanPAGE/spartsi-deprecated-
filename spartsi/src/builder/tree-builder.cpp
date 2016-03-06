@@ -99,6 +99,7 @@ namespace spartsi {
 
         tree_builder &tree_builder::tree(view_of<str_t> name, node_t::shared instance) {
             nodes.top()->children[name] = instance;
+            nodes.top()->alternative_comments[name] = comment.pull();
             return *this;
         }
 
