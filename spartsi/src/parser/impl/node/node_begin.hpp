@@ -13,8 +13,7 @@ namespace spartsi {
             std::string pattern = spec.node.begin + " " + capture;
 
             if(std::regex_match(line, m, weak_reg(pattern))) {
-                Str name = m[1];
-                bld.node(Str(name.begin(), name.begin()+1+name.find_last_not_of(whitespaces)));
+                bld.node(extract_captured(m[1]));
                 return true;
             }
 

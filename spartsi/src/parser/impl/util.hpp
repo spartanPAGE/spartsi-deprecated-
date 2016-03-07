@@ -14,6 +14,8 @@ namespace spartsi {
             extern const std::string whitespaces;
 
             std::regex weak_reg(const std::string &);
+
+            std::string extract_captured(const std::string &);
         }
     }
 }

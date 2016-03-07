@@ -28,7 +28,7 @@ TEST_CASE("tree with nodes", "[spartsi::parser::*general*") {
 
         REQUIRE(tree->comment == "Sample comment");
         REQUIRE(tree->children.size() == 2);
-        
+
         REQUIRE(tree->children.at("first")->comment == "1");
         REQUIRE(tree->children.at("second")->comment == "2");
     }
