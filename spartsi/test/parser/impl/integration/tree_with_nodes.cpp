@@ -15,21 +15,21 @@ TEST_CASE("tree with nodes", "[spartsi::parser::*general*") {
             :: Sample comment    #
             treestructinfo "2.0" #
                 :: 1             #
-                node "first"     #
+                node first       #
                 end node         #
 
                 :: 2             #
-                node "second"    #
+                node second      #
                 end node         #
             end tree             #
         );
 
-        INFO(source);
-
         auto tree = spartsi::parse(source, lang);
 
         REQUIRE(tree->comment == "Sample comment");
-        REQUIRE(tree->children["first"]->comment  == "1");
-        REQUIRE(tree->children["second"]->comment == "2");
+        REQUIRE(tree->children.size() == 2);
+        
+        REQUIRE(tree->children.at("first")->comment == "1");
+        REQUIRE(tree->children.at("second")->comment == "2");
     }
 }
