@@ -4,6 +4,8 @@
 #include <functional>
 
 #include <parser/impl/attr/attr.hpp>
+#include <parser/impl/ref-attr/attr-declare.hpp>
+#include <parser/impl/ref-attr/attr-define.hpp>
 
 #include "parser/impl/comment/comment.hpp"
 #include "parser/impl/tree/tree-begin.hpp"
@@ -25,7 +27,9 @@ namespace spartsi {
                 &tree_end<Str>,
                 &node_begin<Str>,
                 &node_end<Str>,
-                &attr<Str>
+                &attr<Str>,
+                &attr_define<Str>,
+                &attr_declare<Str>
             };
         }
     }
