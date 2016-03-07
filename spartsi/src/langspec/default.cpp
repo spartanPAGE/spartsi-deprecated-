@@ -27,6 +27,10 @@ namespace spartsi {
             langspec_t::ref_node_t{
                 "ref node",
                 "end ref node"
+            },
+
+            langspec_t::comment_t{
+                "::"
             }
         };
     }

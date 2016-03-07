@@ -2,7 +2,7 @@
 
 #include <string>
 
-#include "core/view_of.hpp"
+#include "core/view-of.hpp"
 #include <string>
 
 #include <node/node.hpp>
@@ -59,6 +59,8 @@ namespace spartsi {
             tree_builder &end_ref_node();
 
             tree_builder &tree(view_of<str_t> name, node_t::shared instance);
+
+            void pop_node();
         };
 
         tree_builder build();

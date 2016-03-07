@@ -4,6 +4,12 @@ namespace spartsi {
 
     namespace builder {
 
+        void error(view_of<std::string> what_happened, view_of<std::string> reason, view_of<std::string> who = "") {
+            auto msg = what_happened + "; reason: {" + reason + "};";
+            if(who.size() != 0) msg += "called with: " + who;
+            throw std::runtime_error(msg);
+        }
+
         void comment_buffer::operator+=(view_of<str_t> str) {
             data += str + "\n";
         }
@@ -34,7 +40,9 @@ namespace spartsi {
         }
 
         tree_builder &tree_builder::end_tree() {
-            nodes.pop();
+            pop_node();
+            if(nodes.size() != 0)
+                error("Failed to end tree", "=> nodes.size() != 0");
             return *this;
         }
 
@@ -43,21 +51,30 @@ namespace spartsi {
         }
 
         tree_builder &tree_builder::node(view_of<str_t> name) {
+            if(nodes.empty())
+                error("Failed to create node", "=> nodes.empty()", name);
+
             nodes.push(nodes.top()->spawn_child(name, comment.pull()));
             return *this;
         }
 
         tree_builder &tree_builder::end_node() {
-            nodes.pop();
+            pop_node();
             return *this;
         }
 
         tree_builder &tree_builder::attr(view_of<str_t> name, view_of<str_t> value) {
+            if(nodes.empty())
+                error("Failed to create attr", "=> nodes.empty()", name);
+
             nodes.top()->attributes[name] = std::make_pair(value, comment.pull());
             return *this;
         }
 
         tree_builder &tree_builder::req_attr(view_of<str_t> name) {
+            if(nodes.empty())
+                error("Failed to declare ref attr", "=> nodes.empty()", name);
+
             auto &attrib = nodes.top()->attributes[name];
             attrib = std::make_pair("", comment.pull());
 
@@ -66,6 +83,14 @@ namespace spartsi {
         }
 
         tree_builder &tree_builder::ref_attr(view_of<str_t> name, view_of<str_t> value) {
+            if(nodes.size() != 0)
+                error("Failed to define ref attr", "=> nodes.size() != 0", name);
+
+            if(ref_attrs.empty())
+                error("Failed to define ref attr", "=> ref_attrs.empty()", name);
+
+            //todo: check ref attr name
+
             auto &attr = ref_attrs.back().get();
             attr.first = value;
             if(attr.second.back() != '\n') attr.second += '\n';
@@ -75,15 +100,24 @@ namespace spartsi {
         }
 
         tree_builder &tree_builder::req_node(view_of<str_t> name) {
+            if(nodes.empty())
+                error("Failed to declare ref node", "=> nodes.empty()", name);
+
             ref_nodes.push_front(nodes.top()->spawn_child(name, comment.pull()));
             return *this;
         }
 
         tree_builder &tree_builder::ref_node(view_of<str_t> name) {
+            if(nodes.size() != 0)
+                error("Failed to define ref node", "=> nodes.size() != 0", name);
+
+            if(ref_nodes.empty())
+                error("Failed to define ref node", "=> ref_nodes.empty()");
+
             auto &ref_node = ref_nodes.back();
-            if(ref_node->name != name){ /*todo: use proper exception type*/
-                throw str_t("name doesnt match;").append(ref_node->name).append(" != ").append(name);
-            }
+
+            if(ref_node->name != name)
+                error("Name does not match", ref_node->name, name);
 
             if(ref_node->comment.back() != '\n') ref_node->comment += '\n';
             ref_node->comment += comment.pull();
@@ -103,10 +137,17 @@ namespace spartsi {
             return *this;
         }
 
+        void tree_builder::pop_node() {
+            if(nodes.empty())
+                error("Failed to pop node", "=> nodes.empty()");
+            nodes.pop();
+        }
 
         tree_builder build() {
             return tree_builder{};
         }
+
+
     }
 
 }

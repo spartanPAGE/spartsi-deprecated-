@@ -3,7 +3,7 @@
 #include <unordered_map>
 #include <memory>
 
-#include "core/view_of.hpp"
+#include "core/view-of.hpp"
 
 namespace spartsi {
 
