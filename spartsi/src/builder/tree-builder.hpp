@@ -2,7 +2,7 @@
 
 #include <string>
 
-#include "core/view_of.hpp"
+#include "core/view-of.hpp"
 #include <string>
 
 #include <node/node.hpp>

@@ -6,10 +6,10 @@
 #include <parser/impl/attr/attr.hpp>
 
 #include "parser/impl/comment/comment.hpp"
-#include "parser/impl/tree/tree_begin.hpp"
-#include "parser/impl/tree/tree_end.hpp"
-#include "parser/impl/node/node_begin.hpp"
-#include "parser/impl/node/node_end.hpp"
+#include "parser/impl/tree/tree-begin.hpp"
+#include "parser/impl/tree/tree-end.hpp"
+#include "parser/impl/node/node-begin.hpp"
+#include "parser/impl/node/node-end.hpp"
 
 namespace spartsi {
     namespace parser {
