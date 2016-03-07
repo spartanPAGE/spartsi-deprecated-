@@ -1,6 +1,6 @@
 #include "catch/catch.hpp"
 
-#include <parser/impl/tree_end.hpp>
+#include <parser/impl/tree/tree_end.hpp>
 #include "langspec/default.hpp"
 using namespace std;
 

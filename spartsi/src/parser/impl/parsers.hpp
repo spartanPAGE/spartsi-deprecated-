@@ -3,11 +3,11 @@
 #include <vector>
 #include <functional>
 
-#include "comment.hpp"
-#include "tree_begin.hpp"
-#include "tree_end.hpp"
-#include "node_begin.hpp"
-#include "node_end.hpp"
+#include "parser/impl/comment/comment.hpp"
+#include "parser/impl/tree/tree_begin.hpp"
+#include "parser/impl/tree/tree_end.hpp"
+#include "parser/impl/node/node_begin.hpp"
+#include "parser/impl/node/node_end.hpp"
 
 namespace spartsi {
     namespace parser {
