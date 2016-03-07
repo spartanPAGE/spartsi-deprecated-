@@ -10,10 +10,11 @@ namespace spartsi {
             using namespace util;
             std::smatch m;
 
-            std::string pattern = spec.node.begin + " " + capture_quoted;
+            std::string pattern = spec.node.begin + " " + capture;
 
             if(std::regex_match(line, m, weak_reg(pattern))) {
-                bld.node(m[1]);
+                Str name = m[1];
+                bld.node(Str(name.begin(), name.begin()+1+name.find_last_not_of(whitespaces)));
                 return true;
             }
 
