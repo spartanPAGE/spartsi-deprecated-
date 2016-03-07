@@ -3,6 +3,8 @@
 #include <vector>
 #include <functional>
 
+#include <parser/impl/attr/attr.hpp>
+
 #include "parser/impl/comment/comment.hpp"
 #include "parser/impl/tree/tree_begin.hpp"
 #include "parser/impl/tree/tree_end.hpp"
@@ -22,7 +24,8 @@ namespace spartsi {
                 &tree_begin<Str>,
                 &tree_end<Str>,
                 &node_begin<Str>,
-                &node_end<Str>
+                &node_end<Str>,
+                &attr<Str>
             };
         }
     }
