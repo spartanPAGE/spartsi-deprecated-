@@ -34,7 +34,7 @@ namespace spartsi {
         }
 
         tree_builder &tree_builder::end_tree() {
-            nodes.pop();
+            pop_node();
             return *this;
         }
 
@@ -48,7 +48,7 @@ namespace spartsi {
         }
 
         tree_builder &tree_builder::end_node() {
-            nodes.pop();
+            pop_node();
             return *this;
         }
 
@@ -106,6 +106,14 @@ namespace spartsi {
 
         tree_builder build() {
             return tree_builder{};
+        }
+
+        void tree_builder::pop_node() {
+            if(nodes.empty())
+                throw std::runtime_error(
+                        std::string("tree_builder::pop_node was called, but there is nothing left to pop!")
+                        +"root name: {" + root->name + "}");
+            nodes.pop();
         }
     }
 
