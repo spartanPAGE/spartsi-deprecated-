@@ -26,6 +26,10 @@ namespace spartsi {
             str_t begin, end;
         } ref_node;
 
+        struct comment_t {
+            str_t begin;
+        } comment;
+
         //todo: handle linked-trees-related thing like {tree, as node, in mode}
     };
 
