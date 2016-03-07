@@ -13,7 +13,6 @@ namespace spartsi {
             std::string pattern = spec.comment.begin + ws+"*"+ "(.*)" +ws+"*";
 
             if(std::regex_match(line, m, weak_reg(pattern))) {
-                std::string whitespaces = " \t\f\v\n\r";
                 std::string beg = whitespaces+spec.comment.begin;
 
                 auto beg_pos = line.find_first_not_of(beg);
