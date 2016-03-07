@@ -86,6 +86,11 @@ namespace spartsi {
             if(nodes.size() != 0)
                 error("Failed to define ref attr", "=> nodes.size() != 0", name);
 
+            if(ref_attrs.empty())
+                error("Failed to define ref attr", "=> ref_attrs.empty()", name);
+
+            //todo: check ref attr name
+
             auto &attr = ref_attrs.back().get();
             attr.first = value;
             if(attr.second.back() != '\n') attr.second += '\n';
