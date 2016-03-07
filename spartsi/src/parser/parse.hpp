@@ -27,31 +27,51 @@ namespace spartsi{
     }
 
     template<typename Str>
-    typename node<Str>::shared parse(Str lines_raw, langspec<Str> lang = default_::langspec) {
-        std::vector<Str> lines = {""};
-        for(char c: lines_raw) {
-            if(c == '\n') lines.emplace_back();
-            else lines.back() += c;
+    struct text_parser{
+        langspec<Str> lang;
+        text_parser(langspec<Str> spec = default_::langspec): lang(spec){}
+
+        std::vector<Str> get_lines(const Str &lines_raw) {
+            std::vector<Str> lines = {""};
+            for(char c: lines_raw) {
+                if(c == '\n') lines.emplace_back();
+                else lines.back() += c;
+            }
+            return lines;
         }
 
-        auto builder = spartsi::builder::build();
+        bool should_be_ignored(const Str &line) {
+            return line.find_first_not_of(spartsi::parser::util::whitespaces) == std::string::npos;
+        }
 
-        auto parsers = get_parsers(builder, lang);
-
-        for(auto line: lines) {
-            if(line.find_first_not_of(spartsi::parser::util::whitespaces) == std::string::npos) continue;
-
-            bool result = false;
-
-            for(auto &parser: parsers){
-                result = parser(line);
-                if(result) break;
-            }
-
-            if(!result) {
+        void reject_line_if(const Str &line, bool cond) {
+            if(cond) {
                 throw std::runtime_error("Weird line: " + line);
             }
         }
-        return builder.get();
+
+        typename node<Str>::shared parse(const Str &lines_raw) {
+            auto builder = spartsi::builder::build();
+            auto parsers = get_parsers(builder, lang);
+
+            auto lines = get_lines(lines_raw);
+
+            for(auto line: lines) {
+                if(should_be_ignored(line)) continue;
+
+                bool result = false;
+                for(auto &parser: parsers){
+                    result = parser(line);
+                    if(result) break;
+                }
+                reject_line_if(line, !result);
+            }
+            return builder.get();
+        }
+    };
+
+    template<typename Str>
+    typename node<Str>::shared parse(Str lines_raw, langspec<Str> lang = default_::langspec) {
+        return text_parser<Str>{ lang }.parse(lines_raw);
     }
 }
