@@ -109,7 +109,10 @@ namespace spartsi {
 
         tree_builder &tree_builder::ref_node(view_of<str_t> name) {
             if(nodes.size() != 0)
-                error("Failed to define ref node", "nodes.size() != 0", name);
+                error("Failed to define ref node", "=> nodes.size() != 0", name);
+
+            if(ref_nodes.empty())
+                error("Failed to define ref node", "=> ref_nodes.empty()");
 
             auto &ref_node = ref_nodes.back();
 
