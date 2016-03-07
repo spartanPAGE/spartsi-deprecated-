@@ -11,6 +11,7 @@ namespace spartsi {
             extern const std::string capture;
             extern const std::string quote;
             extern const std::string capture_quoted;
+            extern const std::string whitespaces;
 
             std::regex weak_reg(const std::string &);
         }
