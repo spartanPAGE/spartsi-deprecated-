@@ -13,13 +13,13 @@ namespace spartsi {
             std::string nameless = spec.tree.begin + " " + capture_quoted;
             std::string nameful  = nameless + " " + spec.tree.name + " " + capture_quoted;
 
-            if(regex_match(line, m, weak_reg(nameful))) {
+            if(std::regex_match(line, m, weak_reg(nameful))) {
                 bld.treestructinfo(m[1]);
                 bld.name(m[2]);
                 return true;
             }
 
-            if(regex_match(line, m, weak_reg(nameless))) {
+            if(std::regex_match(line, m, weak_reg(nameless))) {
                 bld.treestructinfo(m[1]);
                 return true;
             }
