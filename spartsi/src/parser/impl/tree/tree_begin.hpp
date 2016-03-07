@@ -1,3 +1,6 @@
+#pragma once
+
+
 #include "langspec/langspec.hpp"
 #include "builder/tree-builder.hpp"
 
