@@ -4,49 +4,54 @@
 #include "builder/tree-builder.hpp"
 
 #include "parser.hpp"
+#include "impl/parsers.hpp"
 
 #include <vector>
 #include <iterator>
 #include <algorithm>
-#include <regex>
 #include <string>
+#include <sstream>
 
 namespace spartsi{
 
-    /*std::string ws() {
-        return "\\s*";
+    template<typename Str>
+    auto get_parsers(spartsi::builder::tree_builder &builder, view_of<langspec<Str>> lang) {
+        auto raw_parsers = parser::get_parsers<Str>();
+        std::vector<parser_t<Str>> result;
+
+        for(auto rp: raw_parsers) {
+            result.push_back([&builder, &lang, rp](const Str &line){ return rp(builder, lang, line); });
+        }
+
+        return result;
     }
 
-    std::string quoted_val() {
-        return "\""+ws()+"(.*)"+ws()+"\"";
-    }*/
-
-    /*complete_parser_t tree_begin_parser(view_of<langspec> lang){
-        return { {
-            {std::regex{"^"+ws()+lang.tree.begin+quoted_val()+ws()+"$"}, 2},
-            {std::regex{"^"+ws()+lang.tree.begin+quoted_val()+ws()+lang.tree.name+whitespaces()+quoted_val()+ws()+"$"}, 3} },
-            [](){}
-        };
-    }*/
-
-    /*parsers_t get_parsers(spartsi::builder::tree_builder &builder, view_of<langspec> lang){
-        parsers_t result;
-        return result;
-    }*/
-
     template<typename Str>
-    typename node<Str>::shared parse(Str lines_source, langspec<Str> lang = default_::langspec) {
-        std::vector<Str> lines;
-        std::copy(lines_source.begin(), lines_source.end(), std::ostream_iterator<Str>(std::back_inserter(lines), "\n"));
+    typename node<Str>::shared parse(Str lines_raw, langspec<Str> lang = default_::langspec) {
+        std::vector<Str> lines = {""};
+        for(char c: lines_raw) {
+            if(c == '\n') lines.emplace_back();
+            else lines.back() += c;
+        }
 
         auto builder = spartsi::builder::build();
 
-        /*parsers_t parsers = get_parsers(builder);
-        for(auto line: lines) {
-            for(auto &parser: parsers){
+        auto parsers = get_parsers(builder, lang);
 
+        for(auto line: lines) {
+            if(line.find_first_not_of(spartsi::parser::util::whitespaces) == std::string::npos) continue;
+
+            bool result = false;
+
+            for(auto &parser: parsers){
+                result = parser(line);
+                if(result) break;
             }
-        }*/
-        return node<Str>::spawn_root("", "", "");
+
+            if(!result) {
+                throw std::runtime_error("Weird line: " + line);
+            }
+        }
+        return builder.get();
     }
 }
