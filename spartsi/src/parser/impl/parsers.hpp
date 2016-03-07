@@ -12,7 +12,10 @@
 namespace spartsi {
     namespace parser {
         template<typename Str>
-        std::vector<std::function<bool(builder::tree_builder &bld, langspec<Str> spec, const Str &line)>> get_parsers() {
+        using raw_parser_t = std::function<bool(builder::tree_builder &bld, langspec<Str> spec, const Str &line)>;
+
+        template<typename Str>
+        std::vector<raw_parser_t<Str>> get_parsers() {
 
             return {
                 &comment<Str>,
