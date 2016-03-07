@@ -31,6 +31,7 @@ namespace spartsi {
 
             std::deque<std::reference_wrapper<node_t::attribute_t>> ref_attrs;
             std::deque<node_t::shared> ref_nodes;
+            node_t::attribute_t *last_used_attr = nullptr;
 
             tree_builder &operator()(view_of<str_t> str);
 
@@ -47,6 +48,8 @@ namespace spartsi {
             tree_builder &end_node();
 
             tree_builder &attr(view_of<str_t> name, view_of<str_t> value);
+
+            tree_builder &attr_val(view_of<str_t> value);
 
             tree_builder &req_attr(view_of<str_t> name);
 

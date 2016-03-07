@@ -67,7 +67,19 @@ namespace spartsi {
             if(nodes.empty())
                 error("Failed to create attr", "=> nodes.empty()", name);
 
-            nodes.top()->attributes[name] = std::make_pair(value, comment.pull());
+            last_used_attr =
+                &(nodes.top()->attributes[name] = std::make_pair(value, comment.pull()));
+            return *this;
+        }
+
+        tree_builder &tree_builder::attr_val(view_of<str_t> value) {
+            //ignore comments
+            comment.pull();
+
+            if(last_used_attr == nullptr)
+                error("Failed to create multiline attr value", "=> last_used_attr == nullptr");
+
+            last_used_attr->first += "\n" + value;
             return *this;
         }
 
@@ -92,6 +104,8 @@ namespace spartsi {
             //todo: check ref attr name
 
             auto &attr = ref_attrs.back().get();
+            last_used_attr = &ref_attrs.back().get();
+
             attr.first = value;
             if(attr.second.back() != '\n') attr.second += '\n';
             attr.second += comment.pull();
@@ -142,6 +156,7 @@ namespace spartsi {
                 error("Failed to pop node", "=> nodes.empty()");
             nodes.pop();
         }
+
 
         tree_builder build() {
             return tree_builder{};
