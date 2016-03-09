@@ -1,6 +1,6 @@
 #include "catch/catch.hpp"
 
-#include "parser/impl/node/node-begin.hpp"
+#include "parser/text/impl/node/node-begin.hpp"
 #include "langspec/default.hpp"
 using namespace std;
 

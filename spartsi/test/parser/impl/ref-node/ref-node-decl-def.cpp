@@ -1,6 +1,6 @@
 #include "catch/catch.hpp"
 
-#include "parser/impl/ref-node/node-decl-def.hpp"
+#include "parser/text/impl/ref-node/node-decl-def.hpp"
 #include "langspec/default.hpp"
 using namespace std;
 

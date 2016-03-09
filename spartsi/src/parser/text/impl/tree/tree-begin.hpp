@@ -4,7 +4,7 @@
 #include "langspec/langspec.hpp"
 #include "builder/tree-builder.hpp"
 
-#include "parser/impl/util.hpp"
+#include "parser/text/impl/util.hpp"
 
 namespace spartsi {
     namespace parser {

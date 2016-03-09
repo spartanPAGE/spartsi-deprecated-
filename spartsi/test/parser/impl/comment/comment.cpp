@@ -1,6 +1,6 @@
 #include "catch/catch.hpp"
 
-#include "parser/impl/comment/comment.hpp"
+#include "parser/text/impl/comment/comment.hpp"
 #include "langspec/default.hpp"
 using namespace std;
 

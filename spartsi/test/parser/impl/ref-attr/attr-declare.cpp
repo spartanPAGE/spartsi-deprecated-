@@ -1,6 +1,6 @@
 #include "catch/catch.hpp"
 
-#include "parser/impl/ref-attr/attr-declare.hpp"
+#include "parser/text/impl/ref-attr/attr-declare.hpp"
 #include "langspec/default.hpp"
 using namespace std;
 

@@ -3,17 +3,17 @@
 #include <vector>
 #include <functional>
 
-#include <parser/impl/attr/attr.hpp>
-#include <parser/impl/ref-attr/attr-declare.hpp>
-#include <parser/impl/ref-attr/attr-define.hpp>
-#include <parser/impl/ref-node/node-decl-def.hpp>
-#include <parser/impl/ref-node/ref-node-end.hpp>
+#include <parser/text/impl/attr/attr.hpp>
+#include <parser/text/impl/ref-attr/attr-declare.hpp>
+#include <parser/text/impl/ref-attr/attr-define.hpp>
+#include <parser/text/impl/ref-node/node-decl-def.hpp>
+#include <parser/text/impl/ref-node/ref-node-end.hpp>
 
-#include "parser/impl/comment/comment.hpp"
-#include "parser/impl/tree/tree-begin.hpp"
-#include "parser/impl/tree/tree-end.hpp"
-#include "parser/impl/node/node-begin.hpp"
-#include "parser/impl/node/node-end.hpp"
+#include "parser/text/impl/comment/comment.hpp"
+#include "parser/text/impl/tree/tree-begin.hpp"
+#include "parser/text/impl/tree/tree-end.hpp"
+#include "parser/text/impl/node/node-begin.hpp"
+#include "parser/text/impl/node/node-end.hpp"
 
 namespace spartsi {
     namespace parser {

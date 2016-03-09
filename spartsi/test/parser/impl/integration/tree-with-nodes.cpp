@@ -3,7 +3,7 @@
 #include "langspec/default.hpp"
 #include "core/strf.hpp"
 
-#include "parser/parse.hpp"
+#include "parser/text/parse.hpp"
 
 using namespace std;
 
