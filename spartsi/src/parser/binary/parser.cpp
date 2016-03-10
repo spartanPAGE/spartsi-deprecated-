@@ -8,29 +8,39 @@ namespace spartsi {
     namespace parser {
         namespace binary {
 
-            struct header {
-                std::array<char, 14> signature;
-                uint8_t major;
-                uint8_t minor;
-
+            struct node {
                 std::string name;
                 std::string comment;
 
-                /* <todo: root  node> */
-                /* // */
+                /* todo: attributes */
+                /* todo: child nodes */
+                /* todo: links */
 
-                header(buffer &buff) {
-                    buff.read(signature.data(), signature.size());
-                    buff.read(reinterpret_cast<char*>(&major), sizeof(major));
-                    buff.read(reinterpret_cast<char*>(&minor), sizeof(minor));
-
-                    name    = read_string(buff);
+                void read(buffer &buff) {
+                    name = read_string(buff);
                     comment = read_string(buff);
                 }
             };
 
+            struct header {
+                std::array<char, 14> signature;
+                std::array<char, 1> major;
+                std::array<char, 1> minor;
+
+                node root;
+
+                void read(buffer &buff) {
+                    buff.read(signature.data(), signature.size());
+                    buff.read(major.data(), major.size());
+                    buff.read(minor.data(), minor.size());
+
+                    root.read(buff);
+                }
+            };
+
             void parse(buffer buff) {
-                header hdr(buff);
+                header hdr;
+                hdr.read(buff);
                 //buff.good()?
             }
         }
